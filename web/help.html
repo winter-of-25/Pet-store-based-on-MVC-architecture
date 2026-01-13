@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JPetStore Demo - User Guide</title>
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #343a40;
+            --text-color: #333;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #f5f7fa;
+            padding: 0;
+            margin: 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #2980b9);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .intro-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+        }
+
+        .intro-section p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .nav-container {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .nav-container h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .quick-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 10px;
+        }
+
+        .nav-item {
+            background-color: var(--light-color);
+            padding: 10px 15px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+
+        .nav-item:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .nav-item a {
+            color: inherit;
+            text-decoration: none;
+            display: block;
+            font-weight: 500;
+        }
+
+        .content-section {
+            background-color: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+        }
+
+        .content-section:hover {
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #eaeaea;
+            font-size: 1.8rem;
+        }
+
+        .section-content {
+            margin-bottom: 1.5rem;
+        }
+
+        .section-content p {
+            margin-bottom: 1rem;
+        }
+
+        .section-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background-color: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: #2980b9;
+            transform: translateY(-3px);
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .quick-nav {
+                grid-template-columns: 1fr;
+            }
+
+            .content-section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container">
+        <h1>JPetStore Demo</h1>
+        <p>Your comprehensive guide to navigating and using the JPetStore online pet shop</p>
+    </div>
+</header>
+
+<div class="container">
+    <section class="intro-section">
+        <p>
+            The JPetStore Demo is an online pet store. Like most e-stores, you can browse
+            and search the product catalog, choose items to add to a shopping cart, amend
+            the shopping cart, and order the items in the shopping cart. You can perform
+            many of these actions without registering with or logging into the
+            application. However, before you can order items you must log in (sign in) to
+            the application. In order to sign in, you must have an account with the
+            application, which is created when you register (sign up) with the
+            application.
+        </p>
+    </section>
+
+    <section class="nav-container">
+        <h3>Quick Navigation</h3>
+        <div class="quick-nav">
+            <div class="nav-item"><a href="#SigningUp">Signing Up</a></div>
+            <div class="nav-item"><a href="#SigningIn">Signing In</a></div>
+            <div class="nav-item"><a href="#Catalog">Product Catalog</a></div>
+            <div class="nav-item"><a href="#CatalogBrowsing">Browsing the Catalog</a></div>
+            <div class="nav-item"><a href="#CatalogSearching">Searching the Catalog</a></div>
+            <div class="nav-item"><a href="#ShoppingCart">Shopping Cart</a></div>
+            <div class="nav-item"><a href="#ShoppingCartAdd">Adding/Removing Items</a></div>
+            <div class="nav-item"><a href="#ShoppingCartUpdate">Updating Quantities</a></div>
+            <div class="nav-item"><a href="#Ordering">Ordering Items</a></div>
+            <div class="nav-item"><a href="#OrderReview">Reviewing Orders</a></div>
+            <div class="nav-item"><a href="#Issues">Known Issues</a></div>
+        </div>
+    </section>
+
+    <section id="SigningUp" class="content-section">
+        <h2 class="section-title">Signing Up</h2>
+        <div class="section-content">
+            <p>
+                To sign up, click the Sign-in link at the right end of the banner. Next,
+                click the New User link in the resulting page. Among other information, the
+                signup page requires you to provide a user identifier and password. This
+                information is used to identify your account and must be provided when
+                signing in.
+            </p>
+        </div>
+    </section>
+
+    <section id="SigningIn" class="content-section">
+        <h2 class="section-title">Signing In</h2>
+        <div class="section-content">
+            <p>
+                You sign in to the application by clicking the Sign-in link at the right end
+                of the banner, filling in the user identifier and password, and clicking the
+                Submit button.
+            </p>
+            <div class="highlight">
+                You will also be redirected to the signin page when you try to place an
+                order and you have not signed in. Once you have signed in, you can return to
+                your shopping session by clicking the shopping cart icon at the right end of
+                the banner.
+            </div>
+        </div>
+    </section>
+
+    <section id="Catalog" class="content-section">
+        <h2 class="section-title">Working with the Product Catalog</h2>
+        <div class="section-content">
+            <p>This section describes how to browse and search the product catalog.</p>
+        </div>
+    </section>
+
+    <section id="CatalogBrowsing" class="content-section">
+        <h3 class="section-title">Browsing the Catalog</h3>
+        <div class="section-content">
+            <p>
+                The pet store catalog is organized hierarchically as follows: categories,
+                products, items.
+            </p>
+            <p>
+                You list the pets in a category by clicking on the category name in the
+                left column of the main page, or by clicking on the picture representing the
+                category.
+            </p>
+            <p>
+                Once you select a category, the pet store will display a list of products
+                within a category. Selecting a product displays a list of items and their
+                prices. Selecting a product item displays a text and visual description of
+                the item and the number of that item in stock.
+            </p>
+        </div>
+    </section>
+
+    <section id="CatalogSearching" class="content-section">
+        <h3 class="section-title">Searching the Catalog</h3>
+        <div class="section-content">
+            <p>
+                You search for products by typing the product name in search field in the
+                middle of the banner.
+            </p>
+        </div>
+    </section>
+
+    <section id="ShoppingCart" class="content-section">
+        <h2 class="section-title">Working with the Shopping Cart</h2>
+        <div class="section-content">
+            <p>This section describes how to manage items in your shopping cart.</p>
+        </div>
+    </section>
+
+    <section id="ShoppingCartAdd" class="content-section">
+        <h3 class="section-title">Adding and Removing Items</h3>
+        <div class="section-content">
+            <p>
+                You add an item to your shopping cart by clicking the Add to Cart button to
+                the right of an item. This action also displays your shopping cart.
+            </p>
+            <p>
+                You can remove the item by clicking the Remove button to the left of the
+                item.
+            </p>
+            <p>
+                To continue shopping, you select a product category from the list under
+                the banner.
+            </p>
+        </div>
+    </section>
+
+    <section id="ShoppingCartUpdate" class="content-section">
+        <h3 class="section-title">Updating the Quantity of an Item</h3>
+        <div class="section-content">
+            <p>
+                You adjust the quantity of an item by typing the quantity in the item's
+                Quantity field in the shopping cart and clicking the Update button.
+            </p>
+            <div class="highlight">
+                If the quantity of items requested is greater than that in stock, the In
+                Stock field in the shopping cart will show that the item is backordered.
+            </div>
+        </div>
+    </section>
+
+    <section id="Ordering" class="content-section">
+        <h2 class="section-title">Ordering Items</h2>
+        <div class="section-content">
+            <p>
+                You order the items in the shopping cart by selecting the Proceed to Checkout
+                button. The pet store will display a read-only list of the shopping cart
+                contents. To proceed with the checkout, click the Continue button.
+            </p>
+            <p>
+                If you have not signed in, the application will display the signin page,
+                where you will need to provide your account name and password. Otherwise, the
+                application will display a page requesting payment and shipping information.
+                When you have filled in the required information, you click the Submit
+                button, and the application will display a read-only page containing your
+                billing and shipping address. If you need to change any information,
+                click your browser's Back button and enter the correct information. To
+                complete the order, you click the Continue button.
+            </p>
+        </div>
+    </section>
+
+    <section id="OrderReview" class="content-section">
+        <h2 class="section-title">Reviewing An Order</h2>
+        <div class="section-content">
+            <p>
+                The final screen contains your order information.
+            </p>
+            <p>
+                The application can be set up to send email confirmation of orders.
+                This option can only be set when the application is deployed. See the
+                installation instructions for further information.
+            </p>
+        </div>
+    </section>
+
+    <section id="Issues" class="content-section">
+        <h2 class="section-title">Known Issues</h2>
+        <div class="section-content">
+            <p>There are currently no known issues with the JPetStore Demo application.</p>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <div class="container">
+        <p>Copyright www.mybatis.org</p>
+    </div>
+</footer>
+
+<a href="#" class="back-to-top" id="backToTop">↑</a>
+
+<script>
+    // Back to top button functionality
+    const backToTopButton = document.getElementById('backToTop');
+
+    window.addEventListener('scroll', () => {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.add('show');
+        } else {
+            backToTopButton.classList.remove('show');
+        }
+    });
+
+    backToTopButton.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href');
+            if (targetId === '#') return;
+
+            const targetElement = document.querySelector(targetId);
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 20,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

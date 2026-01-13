@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyPetStore - Welcome Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* 保持蓝白基调，但增加一点暖色辅助 */
+            --primary-blue: #4facfe;
+            --warm-blue: #00f2fe;
+            --dark-blue: #094b65;
+            --glass-bg: rgba(255, 255, 255, 0.88);
+            --glass-border: rgba(255, 255, 255, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            /* 替换为一张更温馨、阳光充足的猫狗合照 */
+            background: url('https://images.unsplash.com/photo-1623387641168-d9803ddd3f35?q=80&w=2070&auto=format&fit=crop') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 调整遮罩层：使用暖蓝色渐变，让阳光透过来，不再是冷冰冰的蓝色 */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 上方偏暖白光，下方偏蓝光，营造阳光感 */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(79, 172, 254, 0.5) 100%);
+            backdrop-filter: blur(4px); /* 轻微模糊，保留背景细节 */
+            z-index: 0;
+        }
+
+        /* --- 新增：背景漂浮动物元素 --- */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2; /* 在背景之上，粒子之下 */
+            pointer-events: none; /* 不影响鼠标交互 */
+        }
+
+        .float-icon {
+            position: absolute;
+            color: rgba(255, 255, 255, 0.35); /* 半透明白色 */
+            filter: drop-shadow(0 0 5px rgba(100, 200, 255, 0.2));
+            animation: floatAround 25s linear infinite;
+        }
+
+        /* 定义不同图标的位置和大小 */
+        .i1 { top: 10%; left: 10%; font-size: 40px; animation-duration: 28s; }
+        .i2 { top: 20%; right: 15%; font-size: 30px; animation-duration: 22s; animation-delay: -5s;}
+        .i3 { bottom: 30%; left: 20%; font-size: 50px; animation-duration: 35s; animation-delay: -10s;}
+        .i4 { bottom: 15%; right: 10%; font-size: 35px; animation-duration: 30s; animation-delay: -2s;}
+        .i5 { top: 50%; left: 50%; font-size: 25px; animation-duration: 20s; }
+
+        @keyframes floatAround {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(20px, -30px) rotate(10deg); }
+            50% { transform: translate(40px, 0px) rotate(20deg); }
+            75% { transform: translate(20px, 30px) rotate(10deg); }
+            100% { transform: translate(0, 0) rotate(0deg); }
+        }
+
+        /* 粒子容器 (原有的气泡) */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+        }
+
+        /* 主容器样式 - 毛玻璃效果 */
+        #Content {
+            max-width: 450px;
+            width: 100%;
+            background: var(--glass-bg);
+            border-radius: 28px;
+            /* 投影带一点暖色调，更有阳光感 */
+            box-shadow: 0 20px 50px rgba(0, 100, 200, 0.15), inset 0 0 20px rgba(255,255,255,0.5);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            position: relative;
+            z-index: 10;
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+        }
+
+        #Content:hover {
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 25px 60px rgba(0, 120, 220, 0.2);
+        }
+
+        /* 顶部装饰区域 - 改为更柔和的波浪造型 */
+        .top-image {
+            height: 210px;
+            /* 阳光蓝渐变 */
+            background: linear-gradient(to top right, #a1c4fd 0%, #c2e9fb 50%, #e0c3fc 100%);
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* 底部波浪切角 */
+            clip-path: ellipse(150% 100% at 50% 0%);
+        }
+
+        .paw-icon-main {
+            font-size: 110px;
+            color: white;
+            filter: drop-shadow(0 8px 15px rgba(79, 172, 254, 0.4));
+            animation: gentleBounce 4s ease-in-out infinite;
+            z-index: 2;
+        }
+
+        @keyframes gentleBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        /* 内容区样式 */
+        .content-area {
+            padding: 30px 35px 45px;
+            text-align: center;
+        }
+
+        .welcome-title {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: var(--dark-blue);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .welcome-subtitle {
+            color: #557;
+            font-size: 1rem;
+            margin-bottom: 40px;
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        /* 按钮样式 - 更饱满的蓝白渐变 */
+        .enter-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            /* 更有活力的渐变 */
+            background: linear-gradient(90deg, #00c6ff 0%, #0072ff 100%);
+            color: white;
+            font-weight: 700;
+            padding: 18px 50px;
+            border-radius: 50px;
+            box-shadow: 0 12px 25px rgba(0, 114, 255, 0.3);
+            text-decoration: none;
+            width: 100%;
+            transition: all 0.3s ease;
+            font-size: 1.15rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 按钮光效 */
+        .enter-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+            transform: rotate(45deg) translate(-100%, -100%);
+            transition: transform 0.6s ease-out;
+        }
+
+        .enter-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(0, 114, 255, 0.4);
+        }
+
+        .enter-btn:hover::after {
+            transform: rotate(45deg) translate(0, 0);
+        }
+
+        .enter-btn .fa {
+            margin-right: 12px;
+            font-size: 1.3rem;
+        }
+
+        .copyright {
+            color: #889;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+
+        /* 音乐控件样式 (保持不变，功能已足够好) */
+        .music-control {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 48px;
+            height: 48px;
+            background: white;
+            color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        .music-control:hover { transform: scale(1.1); color: white; background: linear-gradient(45deg, var(--primary-blue), var(--warm-blue)); }
+        .music-player {
+            position: fixed; bottom: 95px; right: 30px; width: 180px; background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px); border-radius: 15px; padding: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); z-index: 1000; opacity: 0;
+            transform: translateY(15px); transition: all 0.4s ease; pointer-events: none;
+        }
+        .music-player.show { opacity: 1; transform: translateY(0); pointer-events: all; }
+        .song-info { text-align: center; }
+        .song-title { font-size: 13px; font-weight: 700; color: var(--dark-blue); }
+        .visualizer { display: flex; justify-content: center; align-items: flex-end; height: 20px; margin-top: 10px; gap: 4px; }
+        .bar { width: 4px; background: var(--primary-blue); border-radius: 4px; animation: pulse 1s ease-in-out infinite; animation-delay: calc(var(--i) * 0.1s); }
+        @keyframes pulse { 0%, 100% { height: 4px; opacity: 0.5; } 50% { height: 18px; opacity: 1; } }
+
+        @media (max-width: 480px) {
+            #Content { max-width: 92%; }
+            .welcome-title { font-size: 2rem; }
+            .top-image { height: 180px; }
+            .paw-icon-main { font-size: 90px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="floating-elements">
+    <i class="fa fa-paw float-icon i1"></i>
+    <i class="fa fa-heart float-icon i2"></i> <i class="fa fa-linux float-icon i3"></i> <i class="fa fa-paw float-icon i4"></i>
+    <i class="fa fa-gift float-icon i5"></i> </div>
+
+<div id="particles-js"></div>
+
+<div class="music-player" id="musicPlayer">
+    <div class="song-info">
+        <div class="song-title">Cozy Pet Corner</div>
+    </div>
+    <div class="visualizer">
+        <div class="bar" style="--i: 0"></div>
+        <div class="bar" style="--i: 1"></div>
+        <div class="bar" style="--i: 2"></div>
+        <div class="bar" style="--i: 3"></div>
+        <div class="bar" style="--i: 4"></div>
+    </div>
+</div>
+
+<div class="music-control" id="musicControl" title="Play Warm Music">
+    <i class="fa fa-music"></i>
+</div>
+
+<div id="Content">
+    <div class="top-image">
+        <i class="fa fa-paw paw-icon-main"></i>
+    </div>
+
+    <div class="content-area">
+        <h2 class="welcome-title">Welcome Home</h2>
+        <p class="welcome-subtitle">Discover joy, love, and the perfect companion for your family.</p>
+
+        <a href="signOnForm" class="enter-btn">
+            <i class="fa fa-heart"></i> Enter Pet Store
+        </a>
+
+        <p class="copyright">
+            © 2023 MyPetStore. Made with love.
+        </p>
+    </div>
+</div>
+
+<audio id="background-music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+</audio>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // --- 音乐逻辑 (保持不变) ---
+        const bgMusic = document.getElementById('background-music');
+        const musicControl = document.getElementById('musicControl');
+        const musicPlayer = document.getElementById('musicPlayer');
+        let isPlaying = false;
+        bgMusic.volume = 0.3;
+
+        function toggleMusic() {
+            if (bgMusic.paused) {
+                bgMusic.play().then(() => {
+                    isPlaying = true;
+                    musicControl.innerHTML = '<i class="fa fa-pause"></i>';
+                    showPlayer();
+                }).catch(e => console.log("Audio interaction needed"));
+            } else {
+                bgMusic.pause();
+                isPlaying = false;
+                musicControl.innerHTML = '<i class="fa fa-play"></i>';
+                hidePlayer();
+            }
+        }
+        musicControl.addEventListener('click', toggleMusic);
+        function showPlayer() { musicPlayer.classList.add('show'); setTimeout(() => { if(isPlaying) hidePlayer() }, 4000); }
+        function hidePlayer() { musicPlayer.classList.remove('show'); }
+        musicControl.addEventListener('mouseenter', () => { if(isPlaying) musicPlayer.classList.add('show'); });
+        musicPlayer.addEventListener('mouseleave', hidePlayer);
+
+        // --- 粒子配置 (调整为更柔和的缓慢气泡) ---
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 40, density: { enable: true, value_area: 800 } },
+                color: { value: "#ffffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.6, random: true },
+                size: { value: 8, random: true }, // 较大的气泡
+                move: {
+                    enable: true,
+                    speed: 1.5, // 更慢的速度
+                    direction: "top",
+                    random: true,
+                    straight: false,
+                    out_mode: "out",
+                    bounce: false
+                },
+                line_linked: { enable: false }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: { onhover: { enable: false }, onclick: { enable: false } }
+            },
+            retina_detect: true
+        });
+    });
+</script>
+</body>
+</html>

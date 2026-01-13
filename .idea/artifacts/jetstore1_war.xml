@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="jetstore1:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/jetstore1_war</output-path>
+    <root id="archive" name="jetstore1_war.war">
+      <element id="artifact" artifact-name="jetstore1:war exploded" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jsp-api" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
